@@ -1,0 +1,65 @@
+<odoo>
+    <!-- ACTIONS -->
+    <record id="action_loan_service" model="ir.actions.act_window">
+        <field name="name">Loan Services</field>
+        <field name="res_model">loan.service</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Menuitems -->
+    <menuitem id="menu_loan_service_root" name="Loan Services"
+        web_icon="loan_service_management,static/description/icon.png" sequence="10" />
+
+    <menuitem id="menu_loan_service" name="Loan Services" parent="menu_loan_service_root"
+        action="action_loan_service"
+        sequence="10" />
+
+    <!-- VIEWS -->
+    <record id="view_loan_service_form" model="ir.ui.view">
+        <field name="name">loan.service.form</field>
+        <field name="model">loan.service</field>
+        <field name="arch" type="xml">
+            <form string="Loan Service">
+                <sheet>
+                    <group>
+                        <field name="state" widget="statusbar" statusbar_visible="on_time,delayed"
+                            readonly="1" />
+                        <group>
+                            <field name="name" readonly="1" />
+                            <field name="partner_id" context="{'loan_applicant': True}" />
+                            <field name="id_number" readonly="1" />
+                            <field name="date_of_application" />
+                            <field name="payment_date" />
+                        </group>
+                        <group>
+                            <field name="loan_amount" />
+                            <field name="daily_interest_rate" />
+                            <field name="interest_amount" readonly="1" />
+                            <field name="total_debt" readonly="1" />
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_loan_service_tree" model="ir.ui.view">
+        <field name="name">loan.service.tree</field>
+        <field name="model">loan.service</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Services" decoration-info="state == 'on_time'"
+                decoration-danger="state == 'delayed'">
+                <field name="name" readonly="1" />
+                <field name="partner_id" readonly="1" />
+                <field name="payment_date" readonly="1" />
+                <field name="total_debt" readonly="1" />
+                <field name="state" readonly="1" />
+            </tree>
+        </field>
+    </record>
+</odoo>

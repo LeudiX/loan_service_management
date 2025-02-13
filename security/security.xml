@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="model_loan_service_access" model="ir.model.access">
+            <field name="name">loan.service.access</field>
+            <field name="model_id" ref="model_loan_service"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>
