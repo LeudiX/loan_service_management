@@ -3,7 +3,7 @@
     <record id="action_loan_service" model="ir.actions.act_window">
         <field name="name">Loan Services</field>
         <field name="res_model">loan.service</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,search</field>
     </record>
 
     <!-- Menuitems -->
@@ -22,22 +22,36 @@
             <form string="Loan Service">
                 <sheet>
                     <group>
-                        <field name="state" widget="statusbar" statusbar_visible="on_time,delayed"
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="on_time,delayed,paid"
                             readonly="1" />
                         <group>
                             <field name="name" readonly="1" />
                             <field name="partner_id" context="{'loan_applicant': True}" />
                             <field name="id_number" readonly="1" />
-                            <field name="date_of_application" />
-                            <field name="payment_date" />
+                            <field name="date_of_application" readonly='1' />
+                            <field name="payment_date" readonly='1' />
                         </group>
                         <group>
                             <field name="loan_amount" />
-                            <field name="daily_interest_rate" />
+                            <field name="daily_interest_rate" readonly='1' />
                             <field name="interest_amount" readonly="1" />
                             <field name="total_debt" readonly="1" />
+                            <field name="remaining_debt" readonly="1" />
+                            <field name="suggested_monthly_payment" readonly="1" />
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Payments">
+                            <field name="payment_ids">
+                                <tree editable="bottom">
+                                    <field name="payment_date" />
+                                    <field name="amount" />
+                                    <field name="payment_method" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids" />
@@ -52,14 +66,34 @@
         <field name="name">loan.service.tree</field>
         <field name="model">loan.service</field>
         <field name="arch" type="xml">
-            <tree string="Loan Services" decoration-info="state == 'on_time'"
+            <tree string="Loan Services" decoration-success="state=='paid'"
+                decoration-info="state == 'on_time'"
                 decoration-danger="state == 'delayed'">
                 <field name="name" readonly="1" />
                 <field name="partner_id" readonly="1" />
                 <field name="payment_date" readonly="1" />
                 <field name="total_debt" readonly="1" />
+                <field name="remaining_debt" readonly="1" />
                 <field name="state" readonly="1" />
             </tree>
         </field>
     </record>
+
+    <record id="view_loan_service_search" model="ir.ui.view">
+        <field name="name">loan.service.search</field>
+        <field name="model">loan.service</field>
+        <field name="arch" type="xml">
+            <search string="Search Loan Services">
+                <group expand="1" string="Group By">
+                    <filter string="Name" name="name" domain="[]"
+                        context="{'group_by':'name'}" />
+                    <filter string="State" name="state" domain="[]"
+                        context="{'group_by':'state'}" />
+                    <filter string="Partner" name="partner_id" domain="[]"
+                        context="{'group_by':'partner_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
 </odoo>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action loan.payment -->
+    <record id="action_loan_payment" model="ir.actions.act_window">
+        <field name="name">Loan Payments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">loan.payment</field>
+        <field name="view_mode">tree,form,search</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                There are no examples, click here to add new Loan Payment.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Items-->
+    <menuitem id="menu_loan_payment" name="Loan Payments" parent="menu_loan_service_root"
+        action="action_loan_payment" sequence="20" />
+
+    <!-- View loan.payment form -->
+    <record id="view_loan_payment_form" model="ir.ui.view">
+        <field name="name">loan.payment.form</field>
+        <field name="model">loan.payment</field>
+        <field name="arch" type="xml">
+            <form string="Loan Payment">
+                <sheet>
+                    <group>
+                        <field name="loan_id" required="1" />
+                        <field name="payment_date" required="1" />
+                        <field name="amount" required="1" />
+                        <field name="payment_method" required="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- View loan.payment View Tree  -->
+    <record id="view_loan_payment_tree" model="ir.ui.view">
+        <field name="name">loan.payment.tree</field>
+        <field name="model">loan.payment</field>
+        <field name="arch" type="xml">
+            <tree string="Loan Payments">
+                <field name="loan_id" readonly='1' />
+                <field name="partner_id" readonly='1' />
+                <field name="payment_date" readonly='1' />
+                <field name="amount" readonly='1'/>
+                <field name="payment_method" readonly='1' />
+            </tree>
+        </field>
+    </record>
+
+    <!-- View loan.payment search -->
+    <record id="view_loan_payment_search" model="ir.ui.view">
+        <field name="name">loan.payment.search</field>
+        <field name="model">loan.payment</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter string="Loan" name="loan_id" domain="[]"
+                        context="{'group_by':'loan_id'}" />
+                    <filter string="Payment date" name="payment_date" domain="[]"
+                        context="{'group_by':'payment_date'}" />
+                    <filter string="Payment method" name="payment_method" domain="[]"
+                        context="{'group_by':'loan_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

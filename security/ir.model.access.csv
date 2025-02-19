@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_loan_service_user,access.loan.service.user,model_loan_service,base.group_user,1,1,1,1
 access_res_partner_user,access.res.partner.user,model_res_partner,base.group_user,1,1,1,1
+access_loan_payment_user,access.loan.payment.user,model_loan_payment,base.group_user,1,1,1,1
